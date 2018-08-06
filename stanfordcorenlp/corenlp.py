@@ -22,7 +22,7 @@ import requests
 
 
 class StanfordCoreNLP:
-    def __init__(self, path_or_host, port=None, memory='4g', lang='en', timeout=1500, quiet=True,
+    def __init__(self, path_or_host, port=6768, memory='4g', lang='en', timeout=1500, quiet=True,
                  logging_level=logging.WARNING, max_retries=5):
         self.path_or_host = path_or_host
         self.port = port
@@ -74,15 +74,15 @@ class StanfordCoreNLP:
                     self.lang) + ' not exists. You should download and place it in the ' + directory + ' first.')
 
             # If port not set, auto select
-            if self.port is None:
-                for port_candidate in range(9000, 65535):
-                    if port_candidate not in [conn.laddr[1] for conn in psutil.net_connections()]:
-                        self.port = port_candidate
-                        break
+            # if self.port is None:
+            #     for port_candidate in range(9000, 65535):
+            #         if port_candidate not in [conn.laddr[1] for conn in psutil.net_connections()]:
+            #             self.port = port_candidate
+            #             break
 
             # Check if the port is in use
-            if self.port in [conn.laddr[1] for conn in psutil.net_connections()]:
-                raise IOError('Port ' + str(self.port) + ' is already in use.')
+            # if self.port in [conn.laddr[1] for conn in psutil.net_connections()]:
+            #     raise IOError('Port ' + str(self.port) + ' is already in use.')
 
             # Start native server
             logging.info('Initializing native server...')
